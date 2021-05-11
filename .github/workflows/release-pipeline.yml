@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    name: Deploy Production App
+    name: Publish Image
     runs-on: ubuntu-latest
     defaults:
       run:
