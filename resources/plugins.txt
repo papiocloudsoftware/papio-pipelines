@@ -1,0 +1,8 @@
+blueocean:1.24.4
+github:1.33.0
+github-oauth:0.33
+ec2:1.56
+matrix-auth:2.6.5
+docker-workflow:1.25
+authorize-project:1.4.0
+mailer:1.34

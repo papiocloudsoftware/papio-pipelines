@@ -1,0 +1,16 @@
+name: Build Pipeline
+
+on: [push]
+
+jobs:
+  build:
+    name: Build Image
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build Image
+        run: docker build -t papiocloudsoftware/github-jenkins .
