@@ -1,5 +1,9 @@
 #!/bin/bash
 
+function md5 {
+  md5sum "$1" | awk '{print $1}'
+}
+
 # TODO: Support configurable jenkins user/home
 chown jenkins:jenkins /var
 chown -R jenkins:jenkins /var/jenkins_home
@@ -12,15 +16,20 @@ mkdir -p /var/jenkins_home/plugins
 # For each plugin, if it isn't in the plugins dir already, move it in along with expanded dir
 cd /usr/share/jenkins/ref/plugins
 
+{ time {
 for archive in `ls *.jpi`; do
+  destDir="/var/jenkins_home/plugins"
+  destFile="${destDir}/${archive}"
   dirName=${archive%.jpi}
-  if [ ! -f /var/jenkins_home/plugins/$archive ]; then
-    rsync -az $archive /var/jenkins_home/plugins/
-    rsync -az $dirName /var/jenkins_home/plugins/
+  if [ ! -f $destFile ] || [ `md5 $archive` != `md5 $destFile` ]; then
+    echo "Synchronizing plugin ${archive}"...
+    rsync -az $archive "${destDir}/"
+    rsync -az $dirName "${destDir}/"
   fi
   # Move files so jenkins start script doesn't attempt to copy
   rm -rf $archive $dirName
 done
+} }
 
 cd -
 
