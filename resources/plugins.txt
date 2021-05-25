@@ -7,3 +7,4 @@ docker-workflow:1.26
 authorize-project:1.4.0
 mailer:1.34
 greenballs:1.15.1
+pipeline-utility-steps:2.7.1
