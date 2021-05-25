@@ -1,8 +1,9 @@
 pipeline {
-  agent any
+  agent none
 
   stages {
     stage('Build') {
+      agent any
       steps {
         sh 'docker build -t papiocloudsoftware/github-jenkins .'
       }
@@ -11,14 +12,13 @@ pipeline {
 
     stage('Release?') {
       // Make sure no agent configured while gathering input
-      agent none
       options {
         timeout(time: 5, unit: 'MINUTES')
       }
       // https://www.jenkins.io/doc/book/pipeline/syntax/#when
       when {
         beforeInput true
-        branch 'master'
+        branch 'agent-fix'
         not { changeRequest() }
       }
       // https://www.jenkins.io/doc/book/pipeline/syntax/#input
