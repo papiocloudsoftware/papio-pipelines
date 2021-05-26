@@ -5,7 +5,7 @@ pipeline {
     stage('Build') {
       agent any
       steps {
-        sh 'docker build -t papiocloudsoftware/github-jenkins .'
+        sh 'docker build -t papiocloudsoftware/papio-pipelines .'
       }
     }
 
@@ -43,8 +43,8 @@ pipeline {
             // https://www.jenkins.io/doc/book/pipeline/syntax/#script
             script {
               for (tag in ["latest", env.RELEASE_VERSION]) {
-                sh(script: "docker tag papiocloudsoftware/github-jenkins papiocloudsoftware/github-jenkins:${tag}")
-                sh(script: "docker push papiocloudsoftware/github-jenkins:${tag}")
+                sh(script: "docker tag papiocloudsoftware/papio-pipelines papiocloudsoftware/papio-pipelines:${tag}")
+                sh(script: "docker push papiocloudsoftware/papio-pipelines:${tag}")
               }
             }
           }
