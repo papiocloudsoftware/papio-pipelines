@@ -18,7 +18,7 @@ pipeline {
       // https://www.jenkins.io/doc/book/pipeline/syntax/#when
       when {
         beforeInput true
-        branch 'agent-fix'
+        branch 'master'
         not { changeRequest() }
       }
       // https://www.jenkins.io/doc/book/pipeline/syntax/#input
