@@ -7,4 +7,4 @@ This is faster than having the Jenkins code itself do it but runs the risk of br
 future.
 
 The image is published
-to [DockerHub](https://hub.docker.com/r/papiocloudsoftware/github-jenkins)
+to [DockerHub](https://hub.docker.com/r/papiocloudsoftware/papio-pipelines)
