@@ -5,7 +5,7 @@ pipeline {
     stage('Build & Test Plugin') {
       agent any
       steps {
-        sh './gradlew build'
+        sh './gradlew build --no-daemon'
       }
     }
 
