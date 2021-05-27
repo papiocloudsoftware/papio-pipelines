@@ -2,7 +2,14 @@ pipeline {
   agent none
 
   stages {
-    stage('Build') {
+    stage('Build & Test Plugin') {
+      agent any
+      steps {
+        sh './gradlew build'
+      }
+    }
+
+    stage('Build Image') {
       agent any
       steps {
         sh 'docker build -t papiocloudsoftware/papio-pipelines .'
