@@ -24,7 +24,7 @@ for archive in `ls *.jpi`; do
   if [ ! -f $destFile ] || [ `md5 $archive` != `md5 $destFile` ]; then
     echo "Synchronizing plugin ${archive}"...
     rsync -az $archive "${destDir}/"
-    rsync -az $dirName "${destDir}/"
+    rsync -az --delete $dirName "${destDir}/"
   fi
   # Move files so jenkins start script doesn't attempt to copy
   rm -rf $archive $dirName
