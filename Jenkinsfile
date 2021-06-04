@@ -4,8 +4,11 @@ pipeline {
   stages {
     stage('Build & Test Plugin') {
       agent any
+      environment {
+        DOCKERHUB = credentials("dockerhub")
+      }
       steps {
-        sh './gradlew build --no-daemon'
+        sh 'echo $DOCKERHUB_USR : $DOCKERHUB_PSW'
       }
     }
 
