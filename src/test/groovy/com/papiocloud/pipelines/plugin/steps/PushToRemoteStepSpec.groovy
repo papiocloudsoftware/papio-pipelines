@@ -1,6 +1,6 @@
-package com.papiocloud.pipelines.plugins.steps;
+package com.papiocloud.pipelines.plugin.steps;
 
-import com.papiocloud.pipelines.plugins.AbstractJenkinsSpec
+import com.papiocloud.pipelines.plugin.AbstractJenkinsSpec
 
 class PushToRemoteStepSpec extends AbstractJenkinsSpec {
 

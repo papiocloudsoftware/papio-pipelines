@@ -1,14 +1,11 @@
-package com.papiocloud.pipelines.plugins
-
+package com.papiocloud.pipelines.plugin
 
 import hudson.model.Result
 import jenkins.model.Jenkins
-import jenkins.plugins.git.GitStep
 import org.eclipse.jgit.api.Git
 import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition
 import org.jenkinsci.plugins.workflow.job.WorkflowJob
 import org.jenkinsci.plugins.workflow.job.WorkflowRun
-import org.jenkinsci.plugins.workflow.steps.StepDescriptor
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
 import org.jvnet.hudson.test.JenkinsRule
