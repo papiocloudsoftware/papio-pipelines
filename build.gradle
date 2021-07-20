@@ -16,9 +16,35 @@ test {
     }
 }
 
+ext {
+    // Pull versions out of the plugins.txt to use in dependency resolution
+    // TODO: when we break out the plugin into a separate entity we will want minimum versions not synch'd versions
+    PLUGIN_VERSIONS = file("resources/plugins.txt")
+            .text
+            .split("\n")
+            .findAll { !it.trim().isEmpty() }
+            .collectEntries { plugin ->
+                String[] parts = plugin.split(":")
+                return [(parts[0]): parts[1]]
+            }
+}
+
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        if (!details.requested.version && PLUGIN_VERSIONS[details.requested.name]) {
+            details.useVersion PLUGIN_VERSIONS[details.requested.name]
+        }
+    }
+}
+
 dependencies {
-    implementation "org.jenkins-ci.plugins:git:4.7.1"
-    implementation "org.jenkins-ci.plugins.workflow:workflow-job:2.40"
+    api "org.jenkins-ci.plugins:branch-api"
+    api "org.jenkins-ci.plugins:credentials-binding"
+    api "org.jenkins-ci.plugins:github-branch-source"
+
+    implementation "org.jenkins-ci.plugins:git"
+    implementation "org.jenkins-ci.plugins.workflow:workflow-job"
+    implementation "org.kohsuke:github-api:1.122"
 
     testCompile "org.spockframework:spock-core:1.3-groovy-2.4"
     testCompile "cglib:cglib-nodep:3.3.0"

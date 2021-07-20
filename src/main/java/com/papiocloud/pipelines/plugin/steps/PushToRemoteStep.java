@@ -1,4 +1,4 @@
-package com.papiocloud.pipelines.plugins.steps;
+package com.papiocloud.pipelines.plugin.steps;
 
 import com.google.common.collect.ImmutableSet;
 import hudson.EnvVars;
