@@ -72,6 +72,19 @@ public class WithGitHubTokenStep extends Step {
         this.permissions.put("statuses", level);
     }
 
+    @DataBoundSetter
+    public void setAll(String level) {
+        this.setChecks(level);
+        this.setContents(level);
+        this.setDeployments(level);
+        this.setEnvironments(level);
+        this.setIssues(level);
+        this.setOrganizationPackages(level);
+        this.setPackages(level);
+        this.setPullRequests(level);
+        this.setStatuses(level);
+    }
+
     @Override
     public StepExecution start(StepContext context) throws Exception {
         BindingStep bindingStep = new BindingStep(Arrays.asList(new GitHubTokenBinding(this.permissions)));
@@ -97,33 +110,8 @@ public class WithGitHubTokenStep extends Step {
         }
 
         @Override
-        public Step newInstance(StaplerRequest req, JSONObject formData) throws FormException {
-            Map<String, String> permissions = new HashMap<>();
-            String permissionsArg = formData.getString("permissions");
-            if (permissionsArg != null && !permissionsArg.trim().isEmpty()) {
-                for (String permission : permissionsArg.split("[,]")) {
-                    String[] permParts = permission.split("[:]");
-                    permissions.put(permParts[0], permParts[1]);
-                }
-            }
-            WithGitHubTokenStep withGitHubToken = new WithGitHubTokenStep();
-            withGitHubToken.permissions.putAll(permissions);
-            return withGitHubToken;
-        }
-
-        @Override
         public Set<? extends Class<?>> getRequiredContext() {
             return ImmutableSet.of(WorkflowRun.class, TaskListener.class);
-        }
-
-        @Override
-        public String argumentsToString(Map<String, Object> namedArgs) {
-            Object permissions = namedArgs.get("permissions");
-            if (permissions instanceof List) {
-                return String.join(",", (List) permissions);
-            } else {
-                return null;
-            }
         }
     }
 }

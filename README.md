@@ -20,11 +20,15 @@ publish this plugin as an official Jenkins Plugin. But for now, they will be doc
 | ----------------- | ---------------------------------------------------------------------- | --------------------- |
 | [gitPush]         | Pushes any local commits (or optionally tags) to the remote git source | [PushToRemoteStep]    |
 | [withGitHubToken] | Injects an API token to be used for interacting with GitHub            | [WithGitHubTokenStep] |
+| [gitHubLibrary]   | Loads a [Jenkins Shared Library] from GitHub into the build             | [GitHubLibraryStep]   |
 
 [PushToRemoteStep]: ./src/main/java/com/papiocloud/pipelines/plugin/steps/PushToRemoteStep.java
 [gitPush]: ./docs/steps/gitPush.md
 [PushToRemoteStep]: ./src/main/java/com/papiocloud/pipelines/plugin/steps/WithGitHubTokenStep.java
 [withGitHubToken]: ./docs/steps/withGitHubToken.md
+[gitHubLibrary]: ./docs/steps/gitHubLibrary.md
+[Jenkins Shared Library]: https://www.jenkins.io/doc/book/pipeline/shared-libraries/
+[GitHubLibraryStep]: ./src/main/java/com/papiocloud/pipelines/plugin/steps/GitHubLibraryStep.java
 
 ## Contributing
 
