@@ -9,17 +9,18 @@ Arguments supplied to `withGitHubToken` control the permissions the token will h
 The default permissions, if none supplied, are `contents: "write"`.  This grants the token access to read/write
 to the repository which includes commits, tags, branches, etc.  Valid values for permissions are `read`, `write`, or `none`.
 
-| Name     | Type | Description | Default |
-| ---------------------- | ---- | ----------- | ------- |
-| `checks`               | String | Grants access to the [checks] APIs | `none` |
-| `contents`             | String | Grants access to the [repository contents] APIs | `write` |
-| `deployments`          | String | Grants access to the [deployment] APIs | `none` |
-| `environments`         | String | Grants access to the [environment] APIs | `none` |
-| `issues`               | String | Grants access to the [issues] APIs | `none` |
-| `organizationPackages` | String | Grants access to the [organization packages] APIs | `none` |
-| `packages`             | String | Grants access to the [user packages] APIs | `none` |
-| `pullRequests`         | String | Grants access to the [pull requests] APIs | `none` |
-| `statuses`             | String | Grants access to the [statuses] APIs | `none` |
+| Name                   | Type   | Description                                       | Default |
+| ---------------------- | ------ | ------------------------------------------------- | ------- |
+| `all`                  | String | Grants access to the APIs below                   | `none`  |
+| `checks`               | String | Grants access to the [checks] APIs                | `none`  |
+| `contents`             | String | Grants access to the [repository contents] APIs   | `write` |
+| `deployments`          | String | Grants access to the [deployment] APIs            | `none`  |
+| `environments`         | String | Grants access to the [environment] APIs           | `none`  |
+| `issues`               | String | Grants access to the [issues] APIs                | `none`  |
+| `organizationPackages` | String | Grants access to the [organization packages] APIs | `none`  |
+| `packages`             | String | Grants access to the [user packages] APIs         | `none`  |
+| `pullRequests`         | String | Grants access to the [pull requests] APIs         | `none`  |
+| `statuses`             | String | Grants access to the [statuses] APIs              | `none`  |
 
 [checks]: https://docs.github.com/en/rest/reference/checks
 [repository contents]: https://docs.github.com/en/rest/reference/repos
@@ -40,9 +41,10 @@ to the repository which includes commits, tags, branches, etc.  Valid values for
       stages {
         ...
         stage("Release") {
-          ...
-          withGitHubToken {
-            sh 'yarn release' // uses GITHUB_TOKEN to push changelog back to repository
+          steps {
+            withGitHubToken {
+              sh 'yarn release' // uses GITHUB_TOKEN to push changelog back to repository
+            }
           }
         }
       }

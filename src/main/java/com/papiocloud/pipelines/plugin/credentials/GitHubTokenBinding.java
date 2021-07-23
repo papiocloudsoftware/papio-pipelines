@@ -69,8 +69,7 @@ public class GitHubTokenBinding extends Binding<StringCredentials> {
         WorkflowJob job = run.getParent();
         String repo = job.getParent().getDisplayName();
         // 2. Lookup the GitHubAppCredentials for the job and get the private key and app id
-        Collection<GitHubAppCredentials> appCredentials = CredentialsProvider.lookupCredentials(
-                GitHubAppCredentials.class, job, run.getExecution().getAuthentication(), new DomainRequirement[0]);
+        Collection<GitHubAppCredentials> appCredentials = OrganizationFolderUtil.getAppCredentials(run);
 
         for (GitHubAppCredentials credentials : appCredentials) {
             // 3. Create GitHub instance and get the installation for the folder
