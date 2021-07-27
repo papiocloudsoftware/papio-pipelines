@@ -103,11 +103,6 @@ public class GitHubLibraryStep extends Step {
     public static class DescriptorImpl extends StepDescriptor {
 
         @Override
-        public Set<? extends Class<?>> getRequiredContext() {
-            return ImmutableSet.of(WorkflowRun.class);
-        }
-
-        @Override
         public String getDisplayName() {
             return "Load a Jenkins shared library from GitHub";
         }
@@ -115,6 +110,11 @@ public class GitHubLibraryStep extends Step {
         @Override
         public String getFunctionName() {
             return "gitHubLibrary";
+        }
+
+        @Override
+        public Set<? extends Class<?>> getRequiredContext() {
+            return ImmutableSet.of(WorkflowRun.class);
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.papiocloud.pipelines.plugin.steps;
 
 import com.google.common.collect.ImmutableSet;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.EnvVars;
 import hudson.Extension;
 import hudson.FilePath;
@@ -37,8 +38,21 @@ import java.util.Set;
  */
 public class PushToRemoteStep extends Step {
 
+    static class RemoteSCM {
+
+        final RemoteConfig remote;
+        final GitSCM scm;
+
+        RemoteSCM(RemoteConfig remote, GitSCM scm) {
+            this.remote = remote;
+            this.scm = scm;
+        }
+
+    }
+
     private String remote = "origin";
     private Boolean followTags = false;
+    private Boolean force = false;
 
     @DataBoundConstructor
     public PushToRemoteStep() {
@@ -62,6 +76,15 @@ public class PushToRemoteStep extends Step {
         this.followTags = followTags;
     }
 
+    public Boolean getForce() {
+        return force;
+    }
+
+    @DataBoundSetter
+    public void setForce(Boolean force) {
+        this.force = force;
+    }
+
     @Override
     public StepExecution start(final StepContext context) throws Exception {
         return new SynchronousStepExecution<Void>(context) {
@@ -77,59 +100,87 @@ public class PushToRemoteStep extends Step {
         WorkflowRun run = context.get(WorkflowRun.class);
         EnvVars envVars = context.get(EnvVars.class);
         TaskListener listener = context.get(TaskListener.class);
-        boolean found = false;
-        for (SCM scm : run.getSCMs()) {
+        List<RemoteSCM> configs = new ArrayList<>();
+        List<SCM> scms = run.getSCMs();
+        if (scms == null || scms.isEmpty()) {
+            throw new IOException("GitSCM not found on run");
+        }
+        for (SCM scm : scms) {
             if (scm instanceof GitSCM) {
-                found = true;
                 GitSCM gitSCM = (GitSCM) scm;
                 RemoteConfig remote = gitSCM.getRepositoryByName(this.remote);
-                if (remote == null) {
-                    throw new IOException(String.format("Remote with name '%s' not found", this.remote));
+                if (remote != null) {
+                    configs.add(new RemoteSCM(remote, gitSCM));
                 }
-
-                String remoteBranch = envVars.get(GitSCM.GIT_BRANCH, null);
-                if (remoteBranch == null) {
-                    throw new IOException("Could not determine branch to push to");
-                }
-
-                GitClient client = gitSCM.createClient(
-                        listener,
-                        envVars,
-                        run,
-                        context.get(FilePath.class)
-                );
-                List<URIish> uris = new ArrayList<>(remote.getPushURIs());
-                if (uris.isEmpty()) {
-                    uris.addAll(remote.getURIs());
-                    if (uris.size() > 1) {
-                        throw new IOException("No push URIs configured but remote has multiple pull URIs");
-                    }
-                }
-                if (uris.isEmpty()) {
-                    throw new IOException(String.format("No remote URIs configured for '%s'", remote.getName()));
-                }
-                for (URIish uri : uris) {
-                    PushCommand command = client.push();
-                    command.to(uri);
-                    command.ref(remoteBranch);
-                    if (followTags) {
-                        command.tags(true);
-                    }
-                    command.execute();
-                }
-                break;
             }
         }
-        if (!found) {
-            throw new IOException("GitSCM not found on run");
+
+        RemoteSCM toPushTo = null;
+        if (configs.size() == 1) {
+            toPushTo = configs.get(0);
+        } else if (configs.size() > 1) {
+            // Multiple remotes with configured remote name defined, find one to use based on GIT_URL
+            String gitUrl = envVars.get(GitSCM.GIT_URL, null);
+            if (gitUrl == null) {
+                throw new IOException("Could not determine GIT_URL from environment");
+            }
+            for (RemoteSCM candidate : configs) {
+                String remoteUrl = String.format("%s.git", candidate.scm.getBrowser().getRepoUrl());
+                if (gitUrl.equals(remoteUrl)) {
+                    toPushTo = candidate;
+                    break;
+                }
+            }
+        }
+
+        if (toPushTo == null) {
+            throw new IOException(String.format("Remote with name '%s' not found", this.remote));
+        }
+
+        GitSCM gitSCM = toPushTo.scm;
+        RemoteConfig remote = toPushTo.remote;
+
+        String remoteBranch = envVars.get(GitSCM.GIT_BRANCH, null);
+        if (remoteBranch == null) {
+            throw new IOException("Could not determine branch to push to");
+        }
+
+        GitClient client = gitSCM.createClient(
+                listener,
+                envVars,
+                run,
+                context.get(FilePath.class)
+        );
+        List<URIish> uris = new ArrayList<>(remote.getPushURIs());
+        if (uris.isEmpty()) {
+            uris.addAll(remote.getURIs());
+            if (uris.size() > 1) {
+                throw new IOException("No push URIs configured but remote has multiple pull URIs");
+            }
+        }
+        if (uris.isEmpty()) {
+            throw new IOException(String.format("No remote URIs configured for '%s'", remote.getName()));
+        }
+        for (URIish uri : uris) {
+            PushCommand command = client.push();
+            command.to(uri);
+            command.ref(remoteBranch);
+            if (followTags != null) {
+                command.tags(followTags);
+            }
+            if (force != null) {
+                command.force(force);
+            }
+            command.execute();
         }
     }
 
     @Extension
     public static class DescriptorImpl extends StepDescriptor {
+
         @Override
-        public Set<? extends Class<?>> getRequiredContext() {
-            return ImmutableSet.of(WorkflowRun.class, TaskListener.class, EnvVars.class, FilePath.class);
+        public String getDisplayName() {
+            return "Pushes repository changes back to the remote";
         }
 
         @Override
@@ -138,9 +189,8 @@ public class PushToRemoteStep extends Step {
         }
 
         @Override
-        public String argumentsToString(Map<String, Object> namedArgs) {
-            Object script = namedArgs.get("script");
-            return script instanceof String ? (String) script : null;
+        public Set<? extends Class<?>> getRequiredContext() {
+            return ImmutableSet.of(WorkflowRun.class, TaskListener.class, EnvVars.class, FilePath.class);
         }
     }
 }
