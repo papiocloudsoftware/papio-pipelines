@@ -95,23 +95,23 @@ public class WithGitHubTokenStep extends Step {
     public static class DescriptorImpl extends StepDescriptor {
 
         @Override
-        public String getFunctionName() {
-            return "withGitHubToken";
-        }
-
-        @Override
         public String getDisplayName() {
             return "Retrieve a token for GitHub API access";
         }
 
         @Override
-        public boolean takesImplicitBlockArgument() {
-            return true;
+        public String getFunctionName() {
+            return "withGitHubToken";
         }
 
         @Override
         public Set<? extends Class<?>> getRequiredContext() {
             return ImmutableSet.of(WorkflowRun.class, TaskListener.class);
+        }
+
+        @Override
+        public boolean takesImplicitBlockArgument() {
+            return true;
         }
     }
 }

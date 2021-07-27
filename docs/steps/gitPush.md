@@ -5,10 +5,13 @@ Examples include generation of CHANGELOG, or tagging a deployment/release.
 
 ### Named Arguments
 
-| Name         | Type    | Description                                      | Default  |
-| ------------ | ------- | ------------------------------------------------ | -------- |
-| `remote`     | String  | Name of the git remote to push to                | `origin` |
-| `followTags` | Boolean | Flag to indicate if tags should be pushed or not | `false`  |
+| Name         | Type    | Description                                        | Default  |
+| ------------ | ------- | -------------------------------------------------- | -------- |
+| `remote`     | String  | Name of the git remote to push to                  | `origin` |
+| `followTags` | Boolean | Flag to indicate if tags should be pushed or not   | `false`  |
+| `force`      | Boolean | Flag to specify that the push should use `--force` | `false`  |
+
+> WARNING: using the `force` flag can have unintended side effects, use with caution!
 
 ### Examples
 
