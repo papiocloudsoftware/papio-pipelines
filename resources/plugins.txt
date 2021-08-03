@@ -1,7 +1,7 @@
 authorize-project:1.4.0
 blueocean:1.24.6
 branch-api:2.6.3
-credentials-binding:1.24
+credentials-binding:1.25
 docker-workflow:1.26
 ec2:1.58
 git:4.7.1
@@ -10,6 +10,7 @@ github-branch-source:2.10.2
 github-oauth:0.33
 greenballs:1.15.1
 mailer:1.34
+mask-passwords:3.0
 matrix-auth:2.6.7
 pipeline-utility-steps:2.7.1
-workflow-job:2.40
+workflow-job:2.41
