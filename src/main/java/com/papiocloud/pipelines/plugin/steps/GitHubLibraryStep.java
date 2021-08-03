@@ -27,7 +27,8 @@ public class GitHubLibraryStep extends Step {
 
     @DataBoundConstructor
     public GitHubLibraryStep(String repository) {
-        String[] parts = repository.split("[/]");
+        String[] refParts = repository.split("[@]");
+        String[] parts = refParts[0].split("[/]");
         if (parts.length == 1) {
             this.repository = parts[0];
         } else if (parts.length == 2) {
@@ -38,11 +39,9 @@ public class GitHubLibraryStep extends Step {
                     String.format("Unknown GitHub repository format: %s", repository));
         }
 
-        String[] repoParts = this.repository.split("[@]");
-        if (repoParts.length == 2) {
-            this.repository = repoParts[0];
-            this.ref = repoParts[1];
-        } else if (repoParts.length > 2) {
+        if (refParts.length == 2) {
+            this.ref = refParts[1];
+        } else if (refParts.length > 2) {
             throw new IllegalArgumentException(
                     String.format("Unknown GitHub repository format: %s", repository));
         }
