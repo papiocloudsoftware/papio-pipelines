@@ -23,12 +23,12 @@ class GitHubLibraryStepSpec extends Specification {
 
     def "can configure the owner, repository, and ref from the repository using <owner>/<repo>@<ref> format"() {
         given:
-        GitHubLibraryStep step = new GitHubLibraryStep("owner/repo@the-ref")
+        GitHubLibraryStep step = new GitHubLibraryStep("owner/repo@feature/the-ref")
 
         expect:
         step.owner == "owner"
         step.repository == "repo"
-        step.ref == "the-ref"
+        step.ref == "feature/the-ref"
     }
 
     def "ref defaults to 'main' if none specified"() {
