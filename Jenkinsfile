@@ -46,6 +46,9 @@ pipeline {
           }
 
           steps {
+            // Create and push tag (ensures we are not overriding an existing release)
+            sh 'git tag -a "${RELEASE_VERSION}" -m "${RELEASE_VERSION}"'
+            gitPush(followTags: true)
             sh 'echo ${DOCKERHUB_PSW} | docker login -u ${DOCKERHUB_USR} --password-stdin'
             // https://www.jenkins.io/doc/book/pipeline/syntax/#script
             script {
