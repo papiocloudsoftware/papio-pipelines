@@ -11,6 +11,30 @@ them. This is faster than having the Jenkins code itself do it but runs the risk
 
 The image is published to [DockerHub](https://hub.docker.com/r/papiocloudsoftware/papio-pipelines)
 
+## Permissions and Access
+
+When installing *Pipelines* it will request access for the following
+
+| Access                      | Level        | Purpose                                                                               |
+| --------------------------- | ------------ | ------------------------------------------------------------------------------------- |
+| **code**                    | *read/write* | Allows *Pipelines* to do builds from source as well as push back tags/release commits |
+| **checks**                  | *read/write* | [#21] allows for Jenkins to publish status checks that can be used for branch rules   |
+| **commit status**           | *read/write* | Each commit that triggers a build will get a success/failure status tied to it        |
+| **deployments**             | *read/write* | [#22]/[#23] allow for running from deployment events/triggering events                |
+| **environments**            | *read*       | [#27] allow for interfacing with GitHub Environments same as GitHub Workflows         |
+| **issues**                  | *read/write* | [#24] allows for posting comments to issues associated with the build                 |
+| **metadata**                | *read*       | **Required** - Grants the app access to read plan metadata for installation           |
+| **(organization) packages** | *read/write* | [#25] allows for publishing/resolving GitHub packages (public/private)                |
+| **pull requsets**           | *read/write* | [#26] allows for interfacing with Pull Requests (comments/merging/declining)          |
+
+[#21]: https://github.com/papiocloudsoftware/papio-pipelines/issues/21
+[#22]: https://github.com/papiocloudsoftware/papio-pipelines/issues/22
+[#23]: https://github.com/papiocloudsoftware/papio-pipelines/issues/23
+[#24]: https://github.com/papiocloudsoftware/papio-pipelines/issues/24
+[#25]: https://github.com/papiocloudsoftware/papio-pipelines/issues/25
+[#26]: https://github.com/papiocloudsoftware/papio-pipelines/issues/26
+[#27]: https://github.com/papiocloudsoftware/papio-pipelines/issues/27
+
 ### Custom Steps
 
 As time permits, I will try my best to contribute some of these steps back to the plugins they are relevant for or
