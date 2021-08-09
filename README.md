@@ -24,7 +24,7 @@ publish this plugin as an official Jenkins Plugin. But for now, they will be doc
 
 [PushToRemoteStep]: ./src/main/java/com/papiocloud/pipelines/plugin/steps/PushToRemoteStep.java
 [gitPush]: ./docs/steps/gitPush.md
-[PushToRemoteStep]: ./src/main/java/com/papiocloud/pipelines/plugin/steps/WithGitHubTokenStep.java
+[WithGitHubTokenStep]: ./src/main/java/com/papiocloud/pipelines/plugin/steps/WithGitHubTokenStep.java
 [withGitHubToken]: ./docs/steps/withGitHubToken.md
 [gitHubLibrary]: ./docs/steps/gitHubLibrary.md
 [Jenkins Shared Library]: https://www.jenkins.io/doc/book/pipeline/shared-libraries/
