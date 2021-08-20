@@ -57,6 +57,8 @@ dependencies {
     testCompile "org.jenkins-ci.plugins.workflow:workflow-cps:2.83"
     testCompile "org.jenkins-ci.plugins.workflow:workflow-scm-step:2.12"
     testCompile "org.jenkins-ci.plugins:cloudbees-folder:6.15"
+    testCompile "org.jenkins-ci.plugins:token-macro:2.13"
+    testCompile "org.jenkins-ci.modules:sshd:2.0"
     testCompile 'org.jenkins-ci.modules:instance-identity:2.1'
 }
 
