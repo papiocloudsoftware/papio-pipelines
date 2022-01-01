@@ -1,4 +1,4 @@
-ARG JENKINS_VERSION=2.277.4
+ARG JENKINS_VERSION=2.319.1
 FROM jenkins/jenkins:${JENKINS_VERSION}-lts-alpine
 
 COPY resources /resources
