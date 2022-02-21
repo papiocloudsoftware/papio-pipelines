@@ -1,5 +1,5 @@
 ARG JENKINS_VERSION=2.319.1
-FROM jenkins/jenkins:${JENKINS_VERSION}-lts-alpine
+FROM jenkins/jenkins:${JENKINS_VERSION}-alpine-jdk8
 
 COPY resources /resources
 
