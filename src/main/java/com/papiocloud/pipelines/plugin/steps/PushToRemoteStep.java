@@ -1,7 +1,6 @@
 package com.papiocloud.pipelines.plugin.steps;
 
 import com.google.common.collect.ImmutableSet;
-import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.EnvVars;
 import hudson.Extension;
 import hudson.FilePath;
@@ -20,7 +19,6 @@ import org.kohsuke.stapler.DataBoundSetter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
