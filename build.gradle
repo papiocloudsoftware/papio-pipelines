@@ -45,6 +45,7 @@ dependencies {
     implementation "org.jenkins-ci.plugins:git"
     implementation "org.jenkins-ci.plugins.workflow:workflow-job"
     implementation "org.jenkins-ci.plugins.workflow:workflow-cps-global-lib:564.ve62a_4eb_b_e039"
+    implementation "org.jenkins-ci.plugins:pipeline-github"
     implementation "org.kohsuke:github-api:1.301"
 
     testCompile "org.spockframework:spock-core:1.3-groovy-2.4"

@@ -34,7 +34,7 @@ import java.util.Set;
  *     }
  * </code>
  */
-public class PushToRemoteStep extends Step {
+public class PushToRemoteStep extends AbstractSynchronousStep {
 
     static class RemoteSCM {
 
@@ -84,16 +84,6 @@ public class PushToRemoteStep extends Step {
     }
 
     @Override
-    public StepExecution start(final StepContext context) throws Exception {
-        return new SynchronousStepExecution<Void>(context) {
-            @Override
-            protected Void run() throws Exception {
-                PushToRemoteStep.this.run(context);
-                return null;
-            }
-        };
-    }
-
     protected void run(StepContext context) throws Exception {
         WorkflowRun run = context.get(WorkflowRun.class);
         EnvVars envVars = context.get(EnvVars.class);
