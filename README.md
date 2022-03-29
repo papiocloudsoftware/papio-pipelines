@@ -25,7 +25,7 @@ When installing *Pipelines* it will request access for the following
 | **issues**                  | *read/write* | [#24] allows for posting comments to issues associated with the build                 |
 | **metadata**                | *read*       | **Required** - Grants the app access to read plan metadata for installation           |
 | **(organization) packages** | *read/write* | [#25] allows for publishing/resolving GitHub packages (public/private)                |
-| **pull requsets**           | *read/write* | [#26] allows for interfacing with Pull Requests (comments/merging/declining)          |
+| **pull requsets**           | *read/write* | Allows for interfacing with Pull Requests (comments/merging/declining)                |
 
 [#21]: https://github.com/papiocloudsoftware/papio-pipelines/issues/21
 [#22]: https://github.com/papiocloudsoftware/papio-pipelines/issues/22
@@ -40,11 +40,13 @@ When installing *Pipelines* it will request access for the following
 As time permits, I will try my best to contribute some of these steps back to the plugins they are relevant for or
 publish this plugin as an official Jenkins Plugin. But for now, they will be documented here.
 
-| Function Name     | Description                                                            | Implementation        |
-| ----------------- | ---------------------------------------------------------------------- | --------------------- |
-| [gitPush]         | Pushes any local commits (or optionally tags) to the remote git source | [PushToRemoteStep]    |
-| [withGitHubToken] | Injects an API token to be used for interacting with GitHub            | [WithGitHubTokenStep] |
-| [gitHubLibrary]   | Loads a [Jenkins Shared Library] from GitHub into the build             | [GitHubLibraryStep]   |
+| Function Name        | Description                                                              | Implementation           |
+| -------------------- | ------------------------------------------------------------------------ | ------------------------ |
+| [gitPush]            | Pushes any local commits (or optionally tags) to the remote git source   | [PushToRemoteStep]       |
+| [withGitHubToken]    | Injects an API token to be used for interacting with GitHub              | [WithGitHubTokenStep]    |
+| [gitHubLibrary]      | Loads a [Jenkins Shared Library] from GitHub into the build              | [GitHubLibraryStep]      |
+| [mergePullRequest]   | Attempts to merge if the build was triggered from a pull request         | [MergePullRequestStep]   |
+| [commentPullRequest] | Makes a comment on the PR if the build was triggered from a pull request | [CommentPullRequestStep] |
 
 [PushToRemoteStep]: ./src/main/java/com/papiocloud/pipelines/plugin/steps/PushToRemoteStep.java
 [gitPush]: ./docs/steps/gitPush.md
@@ -53,6 +55,10 @@ publish this plugin as an official Jenkins Plugin. But for now, they will be doc
 [gitHubLibrary]: ./docs/steps/gitHubLibrary.md
 [Jenkins Shared Library]: https://www.jenkins.io/doc/book/pipeline/shared-libraries/
 [GitHubLibraryStep]: ./src/main/java/com/papiocloud/pipelines/plugin/steps/GitHubLibraryStep.java
+[mergePullRequest]: ./docs/steps/mergePullRequest.md
+[MergePullRequestStep]: ./src/main/java/com/papiocloud/pipelines/plugin/steps/pr/MergePullRequestStep.java
+[commentPullRequest]: ./docs/steps/commentPullRequest.md
+[CommentPullRequestStep]: ./src/main/java/com/papiocloud/pipelines/plugin/steps/CommentPullRequestStep.java
 
 ## Contributing
 
