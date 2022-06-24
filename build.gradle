@@ -44,7 +44,7 @@ dependencies {
 
     implementation "org.jenkins-ci.plugins:git"
     implementation "org.jenkins-ci.plugins.workflow:workflow-job"
-    implementation "org.jenkins-ci.plugins.workflow:workflow-cps-global-lib:564.ve62a_4eb_b_e039"
+    implementation "io.jenkins.plugins:pipeline-groovy-lib:593.va_a_fc25d520e9"
     implementation "org.jenkins-ci.plugins:pipeline-github"
     implementation "org.kohsuke:github-api:1.301"
 
