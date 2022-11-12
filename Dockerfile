@@ -1,9 +1,9 @@
-ARG JENKINS_VERSION=2.346.1
-FROM jenkins/jenkins:${JENKINS_VERSION}-alpine-jdk8
+ARG JENKINS_VERSION=2.361.3
+FROM jenkins/jenkins:${JENKINS_VERSION}-alpine-jdk17
 
 COPY resources /resources
 
-RUN install-plugins.sh < /resources/plugins.txt
+RUN jenkins-plugin-cli --plugin-file /resources/plugins.txt
 COPY build/libs/papio-pipelines.jpi /usr/share/jenkins/ref/plugins/papio-pipelines.jpi
 
 # Extract plugins ahead of time to speed startup
