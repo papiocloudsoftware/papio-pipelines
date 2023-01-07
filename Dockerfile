@@ -1,4 +1,4 @@
-ARG JENKINS_VERSION=2.361.3
+ARG JENKINS_VERSION=2.375.1
 FROM jenkins/jenkins:${JENKINS_VERSION}-alpine-jdk17
 
 COPY resources /resources
@@ -15,4 +15,3 @@ USER root
 RUN apk add --no-cache rsync
 
 ENTRYPOINT ["/sbin/tini", "--", "/resources/entrypoint.sh"]
-

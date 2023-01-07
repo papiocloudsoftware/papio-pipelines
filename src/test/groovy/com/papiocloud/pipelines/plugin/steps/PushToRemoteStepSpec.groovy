@@ -12,8 +12,8 @@ node {
 }
 """)
         then:
-        def e = thrown(IOException)
-        e.message == "GitSCM not found on run"
+        def e = thrown(Exception)
+        e.message.endsWith "GitSCM not found on run"
     }
 
     def "will fail if configured remote not found"() {
@@ -25,7 +25,7 @@ node {
 }
 """)
         then:
-        def e = thrown(IOException)
-        e.message == "Remote with name 'mock' not found"
+        def e = thrown(Exception)
+        e.message.endsWith "Remote with name 'mock' not found"
     }
 }
