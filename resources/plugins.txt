@@ -15,3 +15,5 @@ matrix-auth:3.1.6
 pipeline-utility-steps:2.14.0
 workflow-job:1254.v3f64639b_11dd
 pipeline-github:2.8-138.d766e30bb08b
+junit:1166.va_436e268e972
+gradle:2.2

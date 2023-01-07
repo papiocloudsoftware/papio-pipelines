@@ -7,7 +7,7 @@ pipeline {
           docker { image 'openjdk:17-jdk-slim' }
       }
       steps {
-        sh './gradlew build --no-daemon'
+        sh './gradlew build --no-daemon --scan'
       }
     }
 

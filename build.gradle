@@ -4,6 +4,11 @@ plugins {
     id "org.jenkins-ci.jpi" version "0.47.0"
 }
 
+extensions.findByName("buildScan")?.with {
+    setProperty("termsOfServiceUrl", "https://gradle.com/terms-of-service")
+    setProperty("termsOfServiceAgree", "yes")
+}
+
 java {
     sourceCompatibility JavaVersion.VERSION_1_8
     targetCompatibility JavaVersion.VERSION_11
