@@ -60,6 +60,7 @@ dependencies {
 
     testImplementation localGroovy()
     testImplementation "org.spockframework:spock-core:2.3-groovy-3.0"
+    testImplementation "org.spockframework:spock-junit4:2.3-groovy-3.0"
     testImplementation "cglib:cglib-nodep:3.3.0"
     testImplementation "org.objenesis:objenesis:3.2"
     testImplementation "org.codehaus.groovy.modules.http-builder:http-builder:0.7.1"
@@ -72,4 +73,6 @@ dependencies {
     testImplementation "org.jenkins-ci.plugins:token-macro:321.vd7cc1f2a_52c8"
 }
 
-
+test {
+    useJUnitPlatform()
+}

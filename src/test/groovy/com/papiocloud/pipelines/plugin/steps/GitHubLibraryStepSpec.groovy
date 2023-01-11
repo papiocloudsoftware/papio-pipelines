@@ -41,4 +41,13 @@ class GitHubLibraryStepSpec extends Specification {
         step.ref == "main"
     }
 
+    def "can configure repo and ref"() {
+        given:
+        GitHubLibraryStep step = new GitHubLibraryStep("repo@ref")
+
+        expect:
+        step.owner == null
+        step.repository == "repo"
+        step.ref == "ref"
+    }
 }
