@@ -75,5 +75,4 @@ dependencies {
 
 test {
     useJUnitPlatform()
-    systemProperty "jenkins.test.noSpaceInTmpDirs", "true"
 }

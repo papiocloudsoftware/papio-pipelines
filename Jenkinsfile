@@ -4,7 +4,7 @@ pipeline {
   stages {
     stage('Build & Test Plugin') {
       agent {
-          docker { image 'openjdk:17-jdk-slim' }
+          docker { image 'openjdk:17-jdk-alpine' }
       }
       steps {
         sh './gradlew build --no-daemon --scan'
