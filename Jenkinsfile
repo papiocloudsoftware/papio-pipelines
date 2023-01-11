@@ -2,9 +2,19 @@ pipeline {
   agent none
 
   stages {
+    stage('Configure Build Agent') {
+      agent any
+      steps {
+        writeFile(file: "./build/Dockerfile",
+                  text: """
+        FROM openjdk:17-jdk-slim
+        RUN apt-get update && apt-get install -y git && apt-get autoremove -y && apt-get clean
+        """)
+      }
+    }
     stage('Build & Test Plugin') {
       agent {
-          docker { image 'openjdk:17-jdk-alpine' }
+          dockerfile { dir './build' }
       }
       steps {
         sh './gradlew build --no-daemon --scan'
